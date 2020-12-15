@@ -112,8 +112,16 @@ if [[ "$answer" =~ "y" ]] || [[ "$answer" =~ "Y" ]]; then
     curl -sL "${URL_INTERFACES}" > "${FILE_INTERFACES}";
 fi
 
+info "Are you using a Wifi connection [N/y]"
+read answer
+
 info "Restarting NetworkManager"
 systemctl restart "${SERVICE_NM}"
+
+if [[ "$answer" =~ "y" ]] || [[ "$answer" =~ "Y" ]]; then
+    info "Wait 60s for Wifi Reconnecting"
+	sleep 60
+fi
 
 # Parse command line parameters
 while [[ $# -gt 0 ]]; do
